@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     const shuffled = allNews.sort(() => 0.5 - Math.random());
     const top10News = shuffled.slice(0, 10);
 
-    const processedItems = [];
+    const processedItems: string[] = [];
 
     // 3. Process the top 10 items in parallel (Promise.all) to save time
     await Promise.all(top10News.map(async (item) => {
