@@ -16,15 +16,14 @@ export async function GET(request: Request) {
     // 1. Fetch from ALL 10 sources
     const allNews = await fetchAllHeadlines();
     
-    // 2. Pick top 2 most important (For speed/MVP, we just pick the first 2 we find that have substantial content, or randomly shuffle to ensure variety)
-    // To ensure daily variety across all sources without complex ML scoring within a 10s limit:
+    // 2. Pick top 10 most important
     const shuffled = allNews.sort(() => 0.5 - Math.random());
-    const top2News = shuffled.slice(0, 2);
+    const top10News = shuffled.slice(0, 10);
 
     const processedItems = [];
 
-    // 3. Process the top 2 items in parallel (Promise.all) to save time
-    await Promise.all(top2News.map(async (item) => {
+    // 3. Process the top 10 items in parallel (Promise.all) to save time
+    await Promise.all(top10News.map(async (item) => {
       const rawText = `Source: ${item.source}\nTitle: ${item.title}\n\n${item.content}`;
       
       const summary = await summarizeNewsForUPSC(rawText);

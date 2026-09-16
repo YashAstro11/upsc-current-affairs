@@ -37,7 +37,7 @@ export function CurrentAffairCard({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white/80 backdrop-blur-sm border-2 border-dashed border-[var(--color-lavender-soft)] rounded-3xl p-5 shadow-[0_4px_20px_-10px_rgba(74,44,64,0.08)] mb-4 relative overflow-hidden group"
+        className="bg-[var(--color-card)]/80 backdrop-blur-sm border-2 border-dashed border-[var(--color-lavender-soft)] rounded-3xl p-5 shadow-[0_4px_20px_-10px_rgba(74,44,64,0.08)] mb-4 relative overflow-hidden group"
       >
         <div className="absolute top-0 right-0 p-3 opacity-20 text-3xl pointer-events-none transform rotate-12 group-hover:scale-110 transition-transform">🎀</div>
         
@@ -83,7 +83,7 @@ export function CurrentAffairCard({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="w-full max-w-lg bg-white rounded-t-3xl md:rounded-3xl shadow-2xl h-[85vh] md:h-auto md:max-h-[85vh] overflow-hidden flex flex-col"
+              className="w-full max-w-lg bg-[var(--color-card)] rounded-t-3xl md:rounded-3xl shadow-2xl h-[85vh] md:h-auto md:max-h-[85vh] overflow-hidden flex flex-col"
             >
               <div className="p-6 overflow-y-auto flex-1">
                 <div className="flex justify-between items-center mb-6">
@@ -141,7 +141,7 @@ export function CurrentAffairCard({
                 </div>
               </div>
 
-              <div className="p-4 border-t border-[var(--color-lavender-soft)] bg-white">
+              <div className="p-4 border-t border-[var(--color-lavender-soft)] bg-[var(--color-card)]">
                 <button
                   onClick={() => setIsOpen(false)}
                   className="w-full bg-[var(--color-plum)] text-white py-3.5 rounded-xl font-medium transition-transform active:scale-[0.98]"

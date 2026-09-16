@@ -16,6 +16,7 @@ export default function CurrentAffairs() {
   const categories = ["All", ...Array.from(new Set(staticCa.map(item => item.category)))];
 
   const dataSource = currentAffairs.length > 0 ? currentAffairs : staticCa;
+  
   const filteredData = filter === "All" ? dataSource : dataSource.filter(item => item.category === filter);
 
   return (
@@ -31,10 +32,10 @@ export default function CurrentAffairs() {
           <button
             key={cat}
             onClick={() => setFilter(cat)}
-            className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-medium transition-colors ${
               filter === cat
-                ? "bg-pink-400 text-white shadow-md"
-                : "bg-white text-[var(--color-plum-light)] border hover:bg-pink-50"
+                ? "bg-pink-400 text-white shadow-sm"
+                : "bg-[var(--color-card)] text-[var(--color-plum-light)] border hover:bg-pink-50"
             }`}
           >
             {cat}

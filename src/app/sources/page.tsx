@@ -22,7 +22,7 @@ export default function SourcesPage() {
             href={source.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group block p-4 bg-white/50 backdrop-blur-sm rounded-3xl shadow-sm border border-pink-100/50 hover:shadow-md transition-all duration-300"
+            className="group block p-4 bg-[var(--color-card)]/50 backdrop-blur-sm rounded-3xl shadow-sm border border-pink-100/50 hover:shadow-md transition-all duration-300"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">

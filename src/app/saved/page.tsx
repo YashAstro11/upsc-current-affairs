@@ -36,7 +36,7 @@ export default function SavedPage() {
             />
           ))
         ) : (
-          <div className="text-center py-16 bg-white/50 backdrop-blur-sm border border-[var(--color-lavender-soft)] rounded-3xl shadow-sm">
+          <div className="text-center py-16 bg-[var(--color-card)]/50 backdrop-blur-sm border border-[var(--color-lavender-soft)] rounded-3xl shadow-sm">
             <Heart size={48} className="mx-auto text-[var(--color-lavender)] mb-4" />
             <p className="font-bold text-[var(--color-plum)] text-lg mb-2">No saved items yet</p>
             <p className="text-sm text-[var(--color-plum-light)] max-w-[200px] mx-auto">

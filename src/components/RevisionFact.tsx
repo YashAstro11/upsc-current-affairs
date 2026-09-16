@@ -24,7 +24,7 @@ export function RevisionFact({ data, isDone, onDone }: RevisionFactProps) {
       className={`border-2 border-dashed rounded-3xl p-4 mb-3 transition-colors relative overflow-hidden ${
         isDone 
           ? "bg-[var(--color-blush-soft)] border-pink-200" 
-          : "bg-white/80 border-[var(--color-lavender-soft)]"
+          : "bg-[var(--color-card)]/80 border-[var(--color-lavender-soft)]"
       }`}
     >
       {isDone && <div className="absolute top-1 right-2 text-2xl opacity-30 pointer-events-none transform -rotate-12">🎀</div>}

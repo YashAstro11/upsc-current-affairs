@@ -1,9 +1,25 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { CurrentAffair } from "@/data/currentAffairs";
-import { MCQ } from "@/data/mcqs";
-import { RevisionFact } from "@/data/revision";
+import { CurrentAffair, currentAffairsData as staticCa } from "@/data/currentAffairs";
+import { MCQ, mcqsData as staticMcqs } from "@/data/mcqs";
+import { RevisionFact, revisionData as staticRev } from "@/data/revision";
+
+// Ensure we always have 10 items by duplicating if necessary
+const getAtLeast10 = (arr: any[], staticFallback: any[]) => {
+  let source = arr.length > 0 ? arr : staticFallback;
+  if (source.length === 0) return [];
+  
+  const result = [...source];
+  let counter = 2;
+  while (result.length < 10) {
+    source.forEach(x => {
+      result.push({ ...x, id: x.id + '-' + counter });
+    });
+    counter++;
+  }
+  return result.slice(0, 10);
+};
 
 export function useFirebaseData() {
   const [currentAffairs, setCurrentAffairs] = useState<CurrentAffair[]>([]);
@@ -31,5 +47,10 @@ export function useFirebaseData() {
     fetchData();
   }, []);
 
-  return { currentAffairs, mcqs, revisionFacts, loading };
+  return { 
+    currentAffairs: getAtLeast10(currentAffairs, staticCa), 
+    mcqs: getAtLeast10(mcqs, staticMcqs), 
+    revisionFacts: getAtLeast10(revisionFacts, staticRev), 
+    loading 
+  };
 }

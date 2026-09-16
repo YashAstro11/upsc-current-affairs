@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fffafa; /* Very light snow/blush off-white */
-  --foreground: #4a2c40; /* Dark plum text */
-  --color-lavender: #e6e6fa;
-  --color-lavender-soft: #f4f0fa;
-  --color-blush: #ffe4e1;
-  --color-blush-soft: #fff0f5;
-  --color-plum: #4a2c40;
-  --color-plum-light: #7b4f69;
+  /* Midnight Coquette */
+  --background: #2A1B24; /* Deep soft plum */
+  --foreground: #FDFBF7; /* Soft cream */
+  --color-lavender: #4a2c40; /* Darker plum */
+  --color-lavender-soft: #382430; /* Slightly lighter than background */
+  --color-blush: #7b4f69; /* Muted rose */
+  --color-blush-soft: #4a2c40; /* Darker rose */
+  --color-plum: #FDFBF7; /* Soft cream text */
+  --color-plum-light: #d1b8c4; /* Soft pinkish cream */
+  --color-card: #382430; /* Card background */
 }
 
 @theme inline {

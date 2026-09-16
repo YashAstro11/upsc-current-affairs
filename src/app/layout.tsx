@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { BottomNav } from "@/components/BottomNav";
@@ -9,6 +9,13 @@ const quicksand = Quicksand({ subsets: ["latin"], variable: "--font-sans", weigh
 export const metadata: Metadata = {
   title: "UPSC 2027 | Little progress every day ♡",
   description: "A simple, beautiful, mobile-first UPSC Current Affairs website.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
