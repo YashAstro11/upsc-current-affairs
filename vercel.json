@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/generate-daily?secret=mysecret",
+      "schedule": "0 6 * * *"
+    }
+  ]
+}
