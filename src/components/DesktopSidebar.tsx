@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, BookOpen, Brain, CheckSquare, Bookmark, Sparkles } from "lucide-react";
+import { Home, BookOpen, Brain, CheckSquare, Bookmark, Sparkles, Globe } from "lucide-react";
 
 export function DesktopSidebar() {
   const pathname = usePathname();
@@ -13,6 +13,7 @@ export function DesktopSidebar() {
     { name: "Practice", href: "/practice", icon: Brain },
     { name: "Revision", href: "/revision", icon: CheckSquare },
     { name: "Saved", href: "/saved", icon: Bookmark },
+    { name: "Sources", href: "/sources", icon: Globe },
   ];
 
   return (

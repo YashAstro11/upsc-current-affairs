@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, BookOpen, Brain, CheckSquare, Bookmark } from "lucide-react";
+import { Home, BookOpen, Brain, CheckSquare, Bookmark, Globe } from "lucide-react";
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -13,6 +13,7 @@ export function BottomNav() {
     { name: "Practice", href: "/practice", icon: Brain },
     { name: "Revision", href: "/revision", icon: CheckSquare },
     { name: "Saved", href: "/saved", icon: Bookmark },
+    { name: "Sources", href: "/sources", icon: Globe },
   ];
 
   return (

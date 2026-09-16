@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/genai": "^2.22.0",
+    "cheerio": "^1.2.0",
     "firebase": "^12.19.0",
     "firebase-admin": "^14.4.0",
     "framer-motion": "^13.3.0",
