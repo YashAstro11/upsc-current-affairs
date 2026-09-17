@@ -11,6 +11,7 @@ export interface ProgressState {
   mcqStats: {
     [category: string]: { correct: number; total: number };
   };
+  trackedStudySeconds: number;
 }
 
 export function useProgress() {
@@ -30,6 +31,7 @@ export function useProgress() {
     streak: 0,
     lastGoalHitDate: "",
     mcqStats: {},
+    trackedStudySeconds: 0,
   });
   
   // Provide fallbacks for users with older localStorage schemas
@@ -38,6 +40,7 @@ export function useProgress() {
     streak: progressState.streak || 0,
     lastGoalHitDate: progressState.lastGoalHitDate || "",
     mcqStats: progressState.mcqStats || {},
+    trackedStudySeconds: progressState.trackedStudySeconds || 0,
   };
 
   const [justHitGoal, setJustHitGoal] = useState(false);
@@ -50,6 +53,7 @@ export function useProgress() {
       mcqsDone: [],
       revisionDone: [],
       lastUpdated: getTodayStr(),
+      trackedStudySeconds: 0,
     }));
   }
 
@@ -136,6 +140,20 @@ export function useProgress() {
     });
   };
 
+  const getEstimatedStudyTime = () => {
+    const caMinutes = progress.caRead.length * 5;
+    const mcqMinutes = progress.mcqsDone.length * 2;
+    const revisionMinutes = progress.revisionDone.length * 1;
+    return caMinutes + mcqMinutes + revisionMinutes;
+  };
+
+  const addStudyTime = (seconds: number) => {
+    setProgress((prev) => ({
+      ...prev,
+      trackedStudySeconds: (prev.trackedStudySeconds || 0) + seconds
+    }));
+  };
+
   return { 
     progress, 
     markCaRead, 
@@ -143,6 +161,8 @@ export function useProgress() {
     recordMcqAttempt,
     markRevisionDone, 
     isRevisionDone,
-    justHitGoal
+    justHitGoal,
+    getEstimatedStudyTime,
+    addStudyTime
   };
 }

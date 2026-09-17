@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, BookOpen, Brain, CheckSquare, Bookmark, Globe } from "lucide-react";
+import { Home, BookOpen, Brain, CheckSquare, Bookmark, User } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export function BottomNav() {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
@@ -13,7 +15,7 @@ export function BottomNav() {
     { name: "Practice", href: "/practice", icon: Brain },
     { name: "Revision", href: "/revision", icon: CheckSquare },
     { name: "Saved", href: "/saved", icon: Bookmark },
-    { name: "Sources", href: "/sources", icon: Globe },
+    { name: "Profile", href: "/profile", icon: User },
   ];
 
   return (
@@ -22,6 +24,7 @@ export function BottomNav() {
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           const Icon = item.icon;
+          const isProfile = item.name === "Profile";
           return (
             <Link
               key={item.name}
@@ -30,7 +33,16 @@ export function BottomNav() {
                 isActive ? "text-[var(--color-plum)] font-medium" : "text-[var(--color-plum-light)]"
               }`}
             >
-              <Icon size={20} className={isActive ? "fill-[var(--color-lavender-soft)]" : ""} />
+              {isProfile && user?.photoURL ? (
+                <img 
+                  src={user.photoURL} 
+                  alt="Profile" 
+                  className={`w-6 h-6 rounded-full ${isActive ? "ring-2 ring-pink-400" : ""}`}
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <Icon size={20} className={isActive ? "fill-[var(--color-lavender-soft)]" : ""} />
+              )}
               <span className="text-[10px]">{item.name}</span>
             </Link>
           );
@@ -39,3 +51,4 @@ export function BottomNav() {
     </nav>
   );
 }
+

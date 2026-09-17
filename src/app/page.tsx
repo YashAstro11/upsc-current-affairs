@@ -12,15 +12,19 @@ import { CurrentAffairCard } from "@/components/CurrentAffairCard";
 import { McqPractice } from "@/components/McqPractice";
 import { RevisionFact } from "@/components/RevisionFact";
 import { AnalyticsHeatmap } from "@/components/AnalyticsHeatmap";
+import { StudyTimer } from "@/components/StudyTimer";
+import { useAuth } from "@/context/AuthContext";
 import { Sparkles, CheckCircle2, Circle, Loader2, ArrowRight, BookOpen, Brain, Flame, PartyPopper } from "lucide-react";
 import Link from "next/link";
 
 export default function Dashboard() {
   const [mounted, setMounted] = useState(false);
-  const { progress, markCaRead, markMcqDone, recordMcqAttempt, markRevisionDone, isRevisionDone, justHitGoal } = useProgress();
+  const { progress, markCaRead, markMcqDone, recordMcqAttempt, markRevisionDone, isRevisionDone, justHitGoal, getEstimatedStudyTime, addStudyTime } = useProgress();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const { currentAffairs, mcqs, revisionFacts, loading } = useFirebaseData();
+  const { user } = useAuth();
   
+  const displayName = user?.displayName || config.studentName;
   const [daysLeft, setDaysLeft] = useState<number>(0);
 
   const motivationalQuotes = [
@@ -83,7 +87,7 @@ export default function Dashboard() {
         <div className="flex justify-between items-start">
           <div>
             <h1 className="text-2xl md:text-3xl font-serif text-[var(--color-plum)] mb-2">
-              Good evening, {config.studentName} <span className="text-pink-400">♡</span>
+              Good evening, {displayName} <span className="text-pink-400">♡</span>
             </h1>
             <p className="text-[var(--color-plum-light)] font-medium mb-1">Let's make today's preparation count.</p>
             <p className="text-xs text-pink-400 italic font-medium mt-2 border-l-2 border-pink-300 pl-2">{quote}</p>
@@ -132,6 +136,9 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+      {/* Focus Timer */}
+      <StudyTimer trackedStudySeconds={progress.trackedStudySeconds} addStudyTime={addStudyTime} />
 
       {/* Quick Actions Grid */}
       <div className="grid grid-cols-2 gap-4">

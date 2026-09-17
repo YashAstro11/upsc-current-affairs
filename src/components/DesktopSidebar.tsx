@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, BookOpen, Brain, CheckSquare, Bookmark, Sparkles, Globe, Flame } from "lucide-react";
+import { Home, BookOpen, Brain, CheckSquare, Bookmark, Sparkles, Globe, Flame, User, LogOut } from "lucide-react";
 import { useProgress } from "@/hooks/useProgress";
+import { useAuth } from "@/context/AuthContext";
 
 export function DesktopSidebar() {
   const pathname = usePathname();
   const { progress } = useProgress();
+  const { user, signOut } = useAuth();
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
@@ -16,6 +18,7 @@ export function DesktopSidebar() {
     { name: "Revision", href: "/revision", icon: CheckSquare },
     { name: "Saved", href: "/saved", icon: Bookmark },
     { name: "Sources", href: "/sources", icon: Globe },
+    { name: "Profile", href: "/profile", icon: User },
   ];
 
   return (
@@ -64,10 +67,35 @@ export function DesktopSidebar() {
       </nav>
 
       <div className="mt-auto pt-6 border-t border-[var(--color-lavender-soft)]">
-        <p className="text-xs text-center text-[var(--color-plum-light)]">
-          Little progress every day ♡
-        </p>
+        {user ? (
+          <div className="flex items-center gap-3 px-2">
+            {user.photoURL ? (
+              <img 
+                src={user.photoURL} 
+                alt={user.displayName || "User"} 
+                className="w-8 h-8 rounded-full border border-pink-300"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 text-sm font-bold">
+                {(user.displayName || "U").charAt(0)}
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-[var(--color-plum)] truncate">{user.displayName}</p>
+              <p className="text-[10px] text-[var(--color-plum-light)] truncate">{user.email}</p>
+            </div>
+            <button onClick={signOut} className="text-[var(--color-plum-light)] hover:text-red-400 transition-colors p-1.5 rounded-lg hover:bg-red-50">
+              <LogOut size={16} />
+            </button>
+          </div>
+        ) : (
+          <p className="text-xs text-center text-[var(--color-plum-light)]">
+            Little progress every day ♡
+          </p>
+        )}
       </div>
     </aside>
   );
 }
+
