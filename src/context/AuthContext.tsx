@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Don't alert on user-cancelled popups
       if (error.code !== "auth/popup-closed-by-user" && error.code !== "auth/cancelled-popup-request") {
         console.error("Sign in error:", error);
-        alert("Sign in failed. Please try again.");
+        alert(`Sign in failed: ${error.message}`);
       }
     }
   };
