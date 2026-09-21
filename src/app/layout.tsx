@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { ProgressProvider } from "@/context/ProgressContext";
 import { TimerProvider } from "@/context/TimerContext";
+import { TestProvider } from "@/context/TestContext";
 import { AppShell } from "@/components/AppShell";
 
 const quicksand = Quicksand({ subsets: ["latin"], variable: "--font-sans", weight: ["400", "500", "600", "700"] });
@@ -31,9 +32,11 @@ export default function RootLayout({
         <AuthProvider>
           <ProgressProvider>
             <TimerProvider>
-              <AppShell>
-                {children}
-              </AppShell>
+              <TestProvider>
+                <AppShell>
+                  {children}
+                </AppShell>
+              </TestProvider>
             </TimerProvider>
           </ProgressProvider>
         </AuthProvider>
