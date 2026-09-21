@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, BookOpen, Brain, CheckSquare, Bookmark, Sparkles, Globe, Flame, User, LogOut } from "lucide-react";
+import { Home, BookOpen, Brain, CheckSquare, Bookmark, Sparkles, Globe, Flame, User, LogOut, Calculator } from "lucide-react";
 import { useProgress } from "@/hooks/useProgress";
 import { useAuth } from "@/context/AuthContext";
 
@@ -25,6 +25,7 @@ export function DesktopSidebar() {
         { name: "Syllabus", href: "/syllabus", icon: BookOpen },
         { name: "Tests", href: "/tests", icon: CheckSquare },
         { name: "Practice", href: "/practice", icon: Brain },
+        { name: "CSAT", href: "/csat", icon: Calculator },
       ]
     },
     {

@@ -6,6 +6,7 @@ import { ProgressProvider } from "@/context/ProgressContext";
 import { TimerProvider } from "@/context/TimerContext";
 import { TestProvider } from "@/context/TestContext";
 import { SyllabusProvider } from "@/context/SyllabusContext";
+import { CsatProvider } from "@/context/CsatContext";
 import { AppShell } from "@/components/AppShell";
 
 const quicksand = Quicksand({ subsets: ["latin"], variable: "--font-sans", weight: ["400", "500", "600", "700"] });
@@ -35,9 +36,11 @@ export default function RootLayout({
             <TimerProvider>
               <TestProvider>
                 <SyllabusProvider>
-                  <AppShell>
-                    {children}
-                  </AppShell>
+                  <CsatProvider>
+                    <AppShell>
+                      {children}
+                    </AppShell>
+                  </CsatProvider>
                 </SyllabusProvider>
               </TestProvider>
             </TimerProvider>
