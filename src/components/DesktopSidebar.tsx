@@ -16,6 +16,7 @@ export function DesktopSidebar() {
       label: "MAIN",
       items: [
         { name: "Home", href: "/", icon: Home },
+        { name: "Profile", href: "/profile", icon: User },
       ]
     },
     {
