@@ -154,7 +154,7 @@ export default function SubjectDetailsPage() {
                               <button 
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  alert("Notes module coming soon!");
+                                  router.push(`/syllabus/${subject.id}/${topic.id}`);
                                 }}
                                 className="text-pink-400 p-1.5 rounded-lg hover:bg-pink-50 transition-colors flex items-center gap-1"
                                 title="Read Notes"
