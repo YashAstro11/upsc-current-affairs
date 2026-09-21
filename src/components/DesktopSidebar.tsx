@@ -13,8 +13,9 @@ export function DesktopSidebar() {
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
+    { name: "Syllabus", href: "/syllabus", icon: BookOpen },
     { name: "Tests", href: "/tests", icon: CheckSquare },
-    { name: "Current Affairs", href: "/current-affairs", icon: BookOpen },
+    { name: "Current Affairs", href: "/current-affairs", icon: Globe },
     { name: "Practice", href: "/practice", icon: Brain },
     { name: "Saved", href: "/saved", icon: Bookmark },
     { name: "Sources", href: "/sources", icon: Globe },

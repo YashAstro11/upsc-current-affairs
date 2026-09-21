@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, BookOpen, Brain, CheckSquare, Bookmark, User } from "lucide-react";
+import { Home, BookOpen, Brain, CheckSquare, Bookmark, User, Globe } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 export function BottomNav() {
@@ -11,9 +11,9 @@ export function BottomNav() {
 
   const navItems = [
     { name: "Home", href: "/", icon: Home },
+    { name: "Syllabus", href: "/syllabus", icon: BookOpen },
     { name: "Tests", href: "/tests", icon: CheckSquare },
-    { name: "CA", href: "/current-affairs", icon: BookOpen },
-    { name: "Practice", href: "/practice", icon: Brain },
+    { name: "CA", href: "/current-affairs", icon: Globe },
     { name: "Saved", href: "/saved", icon: Bookmark },
     { name: "Profile", href: "/profile", icon: User },
   ];
