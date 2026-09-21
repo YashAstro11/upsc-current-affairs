@@ -12,8 +12,6 @@ export function BottomNav() {
   const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Syllabus", href: "/syllabus", icon: BookOpen },
-    { name: "Tests", href: "/tests", icon: CheckSquare },
-    { name: "CSAT", href: "/csat", icon: Calculator },
     { name: "CA", href: "/current-affairs", icon: Globe },
     { name: "Profile", href: "/profile", icon: User },
   ];
