@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import { ProgressProvider } from "@/context/ProgressContext";
+import { TimerProvider } from "@/context/TimerContext";
 import { AppShell } from "@/components/AppShell";
 
 const quicksand = Quicksand({ subsets: ["latin"], variable: "--font-sans", weight: ["400", "500", "600", "700"] });
@@ -27,9 +29,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${quicksand.variable} font-sans antialiased bg-[var(--background)] min-h-screen text-[var(--foreground)]`}>
         <AuthProvider>
-          <AppShell>
-            {children}
-          </AppShell>
+          <ProgressProvider>
+            <TimerProvider>
+              <AppShell>
+                {children}
+              </AppShell>
+            </TimerProvider>
+          </ProgressProvider>
         </AuthProvider>
       </body>
     </html>
