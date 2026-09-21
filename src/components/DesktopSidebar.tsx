@@ -11,20 +11,34 @@ export function DesktopSidebar() {
   const { progress } = useProgress();
   const { user, signOut } = useAuth();
 
-  const navItems = [
-    { name: "Home", href: "/", icon: Home },
-    { name: "Syllabus", href: "/syllabus", icon: BookOpen },
-    { name: "Tests", href: "/tests", icon: CheckSquare },
-    { name: "Current Affairs", href: "/current-affairs", icon: Globe },
-    { name: "Practice", href: "/practice", icon: Brain },
-    { name: "Saved", href: "/saved", icon: Bookmark },
-    { name: "Sources", href: "/sources", icon: Globe },
-    { name: "Profile", href: "/profile", icon: User },
+  const navGroups = [
+    {
+      label: "MAIN",
+      items: [
+        { name: "Home", href: "/", icon: Home },
+      ]
+    },
+    {
+      label: "PREPARATION",
+      items: [
+        { name: "Syllabus", href: "/syllabus", icon: BookOpen },
+        { name: "Tests", href: "/tests", icon: CheckSquare },
+        { name: "Practice", href: "/practice", icon: Brain },
+      ]
+    },
+    {
+      label: "RESOURCES",
+      items: [
+        { name: "Current Affairs", href: "/current-affairs", icon: Globe },
+        { name: "Saved", href: "/saved", icon: Bookmark },
+        { name: "Sources", href: "/sources", icon: Globe },
+      ]
+    }
   ];
 
   return (
     <aside className="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 border-r border-[var(--color-lavender-soft)] bg-[var(--color-card)]/50 backdrop-blur-xl p-6">
-        <div className="flex items-center justify-between mb-10 text-[var(--color-plum)]">
+        <div className="flex items-center justify-between mb-8 text-[var(--color-plum)]">
         <div className="flex items-center gap-2">
           <Sparkles size={24} className="text-pink-400" />
           <span className="font-semibold text-lg tracking-wide">UPSC 2027</span>
@@ -46,25 +60,34 @@ export function DesktopSidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 px-4 space-y-2">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                isActive
-                  ? "bg-[var(--color-lavender-soft)] text-[var(--color-plum)] font-medium shadow-sm"
-                  : "text-[var(--color-plum-light)] hover:bg-[var(--color-blush-soft)] hover:text-[var(--color-plum)]"
-              }`}
-            >
-              <Icon size={20} className={isActive ? "fill-current opacity-20" : ""} />
-              <span>{item.name}</span>
-            </Link>
-          );
-        })}
+      <nav className="flex-1 overflow-y-auto pr-2 -mr-2 space-y-6">
+        {navGroups.map((group) => (
+          <div key={group.label}>
+            <h4 className="text-[10px] font-bold text-[var(--color-plum-light)] uppercase tracking-wider mb-2 px-2">
+              {group.label}
+            </h4>
+            <div className="space-y-1">
+              {group.items.map((item) => {
+                const isActive = pathname === item.href;
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
+                      isActive
+                        ? "bg-[var(--color-lavender-soft)] text-[var(--color-plum)] font-medium shadow-sm"
+                        : "text-[var(--color-plum-light)] hover:bg-[var(--color-blush-soft)] hover:text-[var(--color-plum)]"
+                    }`}
+                  >
+                    <Icon size={18} className={isActive ? "fill-current opacity-20" : ""} />
+                    <span className="text-sm">{item.name}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </nav>
 
       <div className="mt-auto pt-6 border-t border-[var(--color-lavender-soft)]">
