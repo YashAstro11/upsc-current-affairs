@@ -138,7 +138,7 @@ export default function Dashboard() {
       </div>
 
       {/* Focus Timer */}
-      <StudyTimer trackedStudySeconds={progress.trackedStudySeconds} addStudyTime={addStudyTime} />
+      <StudyTimer />
 
       {/* Quick Actions Grid */}
       <div className="grid grid-cols-2 gap-4">

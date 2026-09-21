@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Play, Pause, RotateCcw, Maximize2, Minimize2, Brain } from "lucide-react";
-import { useTimer, TimerMode } from "@/hooks/useTimer";
+import { useTimer } from "@/hooks/useTimer";
 
 export function StudyTimer() {
   const { activeTab, timers, changeTab, toggleTimer, handleReset } = useTimer();
