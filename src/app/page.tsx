@@ -8,14 +8,8 @@ import { revisionData as staticRev } from "@/data/revision";
 import { useProgress } from "@/hooks/useProgress";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { useFirebaseData } from "@/hooks/useFirebaseData";
-import { CurrentAffairCard } from "@/components/CurrentAffairCard";
-import { McqPractice } from "@/components/McqPractice";
-import { RevisionFact } from "@/components/RevisionFact";
-import { AnalyticsHeatmap } from "@/components/AnalyticsHeatmap";
-import { StudyTimer } from "@/components/StudyTimer";
 import { useAuth } from "@/context/AuthContext";
-import { Sparkles, CheckCircle2, Circle, Loader2, ArrowRight, BookOpen, Brain, Flame, PartyPopper } from "lucide-react";
-import Link from "next/link";
+import { Sparkles, CheckCircle2, Circle, Flame, PartyPopper } from "lucide-react";
 
 export default function Dashboard() {
   const [mounted, setMounted] = useState(false);
@@ -137,92 +131,6 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Focus Timer */}
-      <StudyTimer />
-
-      {/* Quick Actions Grid */}
-      <div className="grid grid-cols-2 gap-4">
-        <Link href="/practice" onClick={() => import('@/utils/sounds').then(m => m.playSound('pop'))} className="bg-gradient-to-br from-[var(--color-lavender-soft)] to-[var(--color-card)] border border-[var(--color-lavender)] p-4 rounded-3xl flex flex-col items-center justify-center gap-2 hover:shadow-md transition-all active:scale-95 text-center">
-          <div className="bg-[var(--color-lavender)] text-white p-3 rounded-full">
-            <Brain size={24} />
-          </div>
-          <div>
-            <h3 className="font-bold text-sm text-[var(--color-foreground)]">MCQ Quiz</h3>
-            <p className="text-[10px] text-[var(--color-plum-light)]">Practice PYQs</p>
-          </div>
-        </Link>
-
-        <Link href="/revision" onClick={() => import('@/utils/sounds').then(m => m.playSound('pop'))} className="bg-gradient-to-br from-[var(--color-blush-soft)] to-[var(--color-card)] border border-[var(--color-blush)] p-4 rounded-3xl flex flex-col items-center justify-center gap-2 hover:shadow-md transition-all active:scale-95 text-center">
-          <div className="bg-[var(--color-blush)] text-white p-3 rounded-full">
-            <BookOpen size={24} />
-          </div>
-          <div>
-            <h3 className="font-bold text-sm text-[var(--color-foreground)]">Flashcards</h3>
-            <p className="text-[10px] text-[var(--color-plum-light)]">Quick Revision</p>
-          </div>
-        </Link>
-      </div>
-
-      {/* Analytics Heatmap */}
-      <AnalyticsHeatmap stats={progress.mcqStats} />
-
-      {/* Today's CA */}
-      <section>
-        <h2 className="text-xl font-bold text-[var(--color-plum)] mb-4 flex items-center gap-2">
-          <span className="w-1.5 h-6 bg-pink-400 rounded-full inline-block"></span>
-          Today's Current Affairs
-        </h2>
-        <div>
-          {todayCA.map(ca => (
-            <CurrentAffairCard 
-              key={ca.id} 
-              data={ca} 
-              isBookmarked={isBookmarked(ca.id)}
-              onBookmark={toggleBookmark}
-              onRead={markCaRead}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Quick Practice */}
-      <section>
-        <h2 className="text-xl font-bold text-[var(--color-plum)] mb-4 flex items-center gap-2 mt-8">
-          <span className="w-1.5 h-6 bg-[var(--color-lavender)] rounded-full inline-block"></span>
-          Quick Practice
-        </h2>
-        <div>
-          {todayMCQs.map(mcq => (
-            <McqPractice 
-              key={mcq.id} 
-              data={mcq} 
-              onComplete={(id, isCorrect) => {
-                markMcqDone(id);
-                recordMcqAttempt(mcq.category, isCorrect);
-              }} 
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Quick Revision */}
-      <section>
-        <h2 className="text-xl font-bold text-[var(--color-plum)] mb-4 flex items-center gap-2 mt-8">
-          <span className="w-1.5 h-6 bg-[var(--color-blush)] rounded-full inline-block"></span>
-          Quick Revision
-        </h2>
-        <div>
-          {todayRevision.map(rev => (
-            <RevisionFact 
-              key={rev.id} 
-              data={rev} 
-              isDone={isRevisionDone(rev.id)}
-              onDone={markRevisionDone} 
-            />
-          ))}
-        </div>
-      </section>
-      
     </div>
   );
 }
