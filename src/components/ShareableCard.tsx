@@ -23,10 +23,8 @@ export function ShareableCard({ progress, estimatedStudyTime, userName }: Sharea
     return m > 0 ? `${h}h ${m}m` : `${h}h`;
   };
 
-  const hasTrackedTime = (progress.trackedStudySeconds || 0) > 0;
   const trackedMinutes = Math.ceil((progress.trackedStudySeconds || 0) / 60);
-  // If they have used the timer even for a few seconds today, use tracked time.
-  const displayMinutes = hasTrackedTime ? trackedMinutes : estimatedStudyTime;
+  const displayMinutes = trackedMinutes;
 
   const caCount = Math.min(progress.caRead.length, 10);
   const mcqCount = Math.min(progress.mcqsDone.length, 10);

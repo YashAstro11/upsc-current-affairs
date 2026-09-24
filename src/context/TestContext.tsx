@@ -18,6 +18,7 @@ export type TestState = {
 interface TestContextType {
   activeState: TestState | null;
   activeTest: Test | null;
+  isInitialized: boolean;
   startTest: (testId: string) => void;
   submitTest: () => void;
   answerQuestion: (questionId: string, optionIndex: number) => void;
@@ -31,7 +32,7 @@ interface TestContextType {
 const TestContext = createContext<TestContextType | undefined>(undefined);
 
 export function TestProvider({ children }: { children: ReactNode }) {
-  const [activeState, setActiveState] = useLocalStorage<TestState | null>("upsc_test_state", null);
+  const [activeState, setActiveState, isInitialized] = useLocalStorage<TestState | null>("upsc_test_state", null);
   const [activeTest, setActiveTest] = useState<Test | null>(null);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export function TestProvider({ children }: { children: ReactNode }) {
     } else {
       setActiveTest(null);
     }
-  }, [activeState?.testId]);
+  }, [activeState?.testId, isInitialized]);
 
   const startTest = (testId: string) => {
     const test = sampleTests.find((t) => t.id === testId);
@@ -140,6 +141,7 @@ export function TestProvider({ children }: { children: ReactNode }) {
       value={{
         activeState,
         activeTest,
+        isInitialized,
         startTest,
         submitTest,
         answerQuestion,

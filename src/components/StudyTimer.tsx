@@ -1,16 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Play, Pause, RotateCcw, Maximize2, Minimize2, Brain } from "lucide-react";
+import { Play, Pause, Maximize2, Minimize2, Sparkles, BookOpen } from "lucide-react";
 import { useTimer } from "@/hooks/useTimer";
 
 export function StudyTimer() {
-  const { activeTab, timers, changeTab, toggleTimer, handleReset } = useTimer();
+  const { isRunning, todaySeconds, toggleTimer } = useTimer();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const formatTime = (totalSecs: number) => {
-    const m = Math.floor(totalSecs / 60);
+    const h = Math.floor(totalSecs / 3600);
+    const m = Math.floor((totalSecs % 3600) / 60);
     const s = totalSecs % 60;
+    if (h > 0) {
+      return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
@@ -37,20 +41,23 @@ export function StudyTimer() {
   }, []);
 
   const containerClasses = isFullscreen
-    ? "fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0a] text-white"
-    : "bg-[var(--color-card)]/80 backdrop-blur-sm rounded-3xl p-6 border border-[var(--color-lavender-soft)] shadow-[0_4px_20px_-10px_rgba(74,44,64,0.08)] relative overflow-hidden my-4 flex flex-col items-center justify-center min-h-[350px]";
+    ? "fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-[#1a1217] via-[#2A1B24] to-[#4a2c40] text-white"
+    : "bg-gradient-to-br from-[#382430]/90 to-[#2A1B24]/90 backdrop-blur-md rounded-3xl p-6 border border-[#7b4f69]/40 shadow-[0_4px_30px_-5px_rgba(74,44,64,0.3)] relative overflow-hidden my-4 flex flex-col items-center justify-center min-h-[350px]";
 
-  const textColor = isFullscreen ? "text-white" : "text-[var(--color-foreground)]";
-
-  const activeTimerState = timers[activeTab];
+  const textColor = "text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-rose-200";
 
   return (
     <div className={containerClasses}>
+      {/* Background glowing effects */}
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,_#7b4f69_0%,_transparent_60%)] opacity-30 pointer-events-none" />
+      <div className="absolute top-10 left-10 text-xl opacity-20 pointer-events-none animate-pulse"><Sparkles className="text-pink-300" /></div>
+      <div className="absolute bottom-10 right-10 text-2xl opacity-20 pointer-events-none animate-pulse" style={{ animationDelay: '1s' }}><Sparkles className="text-pink-300" /></div>
+
       {/* Fullscreen Toggle */}
       <button
         onClick={toggleFullscreen}
-        className={`absolute top-6 right-6 p-2 rounded-full transition-colors ${
-          isFullscreen ? "hover:bg-white/10 text-white/50 hover:text-white" : "hover:bg-[var(--color-lavender-soft)] text-[var(--color-plum-light)] hover:text-[var(--color-plum)]"
+        className={`absolute top-6 right-6 p-2 rounded-full transition-colors z-20 ${
+          isFullscreen ? "hover:bg-white/10 text-white/50 hover:text-white" : "hover:bg-[#7b4f69]/40 text-pink-300/70 hover:text-pink-200"
         }`}
       >
         {isFullscreen ? <Minimize2 size={24} /> : <Maximize2 size={24} />}
@@ -58,66 +65,11 @@ export function StudyTimer() {
 
       <div className="flex flex-col items-center justify-center relative z-10 w-full max-w-2xl">
         {/* Header */}
-        <div className="flex items-center gap-2 mb-8">
-          <Brain size={20} className={isFullscreen ? "text-white/50" : "text-[var(--color-plum-light)]"} />
-          <h2 className={`font-bold uppercase tracking-widest text-sm ${isFullscreen ? "text-white/50" : "text-pink-400"}`}>
-            Focus Session
+        <div className="flex items-center gap-2 mb-10 bg-[#2A1B24]/50 border border-pink-400/20 px-4 py-1.5 rounded-full shadow-inner">
+          <BookOpen size={16} className="text-pink-400" />
+          <h2 className="font-bold uppercase tracking-[0.2em] text-xs text-pink-300">
+            Daily Study Tracker
           </h2>
-        </div>
-
-        {/* Mode Selector */}
-        <div className={`flex items-center gap-2 mb-8 p-1.5 rounded-full ${isFullscreen ? "bg-white/10" : "bg-[var(--color-lavender-soft)] shadow-inner"}`}>
-          <button
-            onClick={() => changeTab("pomodoro")}
-            className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 relative ${
-              activeTab === "pomodoro"
-                ? isFullscreen
-                  ? "bg-white text-black"
-                  : "bg-[var(--color-card)] text-[var(--color-plum)] shadow-sm translate-y-[-2px]"
-                : isFullscreen
-                ? "text-white/70 hover:text-white"
-                : "text-[var(--color-plum-light)] hover:text-[var(--color-plum)]"
-            }`}
-          >
-            Pomodoro
-            {timers.pomodoro.isRunning && activeTab !== "pomodoro" && (
-              <span className="absolute top-1 right-1 w-2 h-2 bg-pink-400 rounded-full animate-pulse shadow-sm"></span>
-            )}
-          </button>
-          <button
-            onClick={() => changeTab("shortBreak")}
-            className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 relative ${
-              activeTab === "shortBreak"
-                ? isFullscreen
-                  ? "bg-white text-black"
-                  : "bg-[var(--color-card)] text-blue-400 shadow-sm translate-y-[-2px]"
-                : isFullscreen
-                ? "text-white/70 hover:text-white"
-                : "text-[var(--color-plum-light)] hover:text-blue-400"
-            }`}
-          >
-            Short Break
-            {timers.shortBreak.isRunning && activeTab !== "shortBreak" && (
-              <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full animate-pulse shadow-sm"></span>
-            )}
-          </button>
-          <button
-            onClick={() => changeTab("longBreak")}
-            className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 relative ${
-              activeTab === "longBreak"
-                ? isFullscreen
-                  ? "bg-white text-black"
-                  : "bg-[var(--color-card)] text-purple-400 shadow-sm translate-y-[-2px]"
-                : isFullscreen
-                ? "text-white/70 hover:text-white"
-                : "text-[var(--color-plum-light)] hover:text-purple-400"
-            }`}
-          >
-            Long Break
-            {timers.longBreak.isRunning && activeTab !== "longBreak" && (
-              <span className="absolute top-1 right-1 w-2 h-2 bg-purple-500 rounded-full animate-pulse shadow-sm"></span>
-            )}
-          </button>
         </div>
 
         {/* Massive Timer Display */}
@@ -126,7 +78,7 @@ export function StudyTimer() {
             isFullscreen ? "text-[8rem] sm:text-[12rem] md:text-[16rem]" : "text-7xl sm:text-8xl"
           } ${textColor} drop-shadow-sm leading-none mb-12`}
         >
-          {formatTime(activeTimerState.timeLeft)}
+          {formatTime(todaySeconds)}
         </div>
 
         {/* Controls */}
@@ -134,31 +86,28 @@ export function StudyTimer() {
           {/* Main Play/Pause Button */}
           <button
             onClick={toggleTimer}
-            className={`px-12 h-16 rounded-full flex items-center justify-center transition-all duration-300 active:scale-90 shadow-lg text-xl font-bold uppercase tracking-wider ${
-              isFullscreen
-                ? activeTimerState.isRunning
-                  ? "bg-white/20 text-white hover:bg-white/30"
-                  : "bg-white text-black hover:bg-gray-200"
-                : activeTimerState.isRunning
-                ? "bg-orange-900/30 text-orange-400 hover:bg-orange-900/40 shadow-orange-500/10 translate-y-[-2px]"
-                : "bg-gradient-to-r from-pink-400 to-rose-400 text-white hover:from-pink-500 hover:to-rose-500 shadow-pink-500/30 translate-y-[-2px]"
+            className={`px-12 h-16 rounded-full flex items-center justify-center gap-3 transition-all duration-300 active:scale-90 shadow-[0_4px_20px_rgba(244,114,182,0.3)] text-xl font-bold uppercase tracking-wider ${
+              isRunning
+                ? "bg-[#382430] border border-pink-400/30 text-pink-300 hover:bg-[#4a2c40] translate-y-[-2px]"
+                : "bg-gradient-to-r from-pink-500 to-rose-400 text-white hover:from-pink-600 hover:to-rose-500 translate-y-[-2px]"
             }`}
           >
-            {activeTimerState.isRunning ? "Pause" : "Start"}
-          </button>
-
-          {/* Reset Button */}
-          <button
-            onClick={handleReset}
-            className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 active:scale-90 ${
-              isFullscreen 
-              ? "bg-white/10 text-white hover:bg-white/20" 
-              : "bg-[var(--color-lavender-soft)] text-[var(--color-plum-light)] hover:bg-[var(--color-lavender)] hover:text-[var(--color-plum)] hover:shadow-sm"
-            }`}
-          >
-            <RotateCcw size={24} />
+            {isRunning ? (
+              <>
+                <Pause size={24} className="fill-current" /> Pause
+              </>
+            ) : (
+              <>
+                <Play size={24} className="fill-current" /> Start
+              </>
+            )}
           </button>
         </div>
+        
+        {/* Helper text */}
+        <p className="mt-8 text-xs text-pink-300/50 font-medium tracking-wide">
+          Your progress is automatically saved to your shareable card
+        </p>
       </div>
     </div>
   );

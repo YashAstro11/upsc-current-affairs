@@ -11,17 +11,19 @@ import { AnimatePresence, motion } from "framer-motion";
 export default function TestAttemptPage() {
   const params = useParams();
   const router = useRouter();
-  const { activeTest, activeState, submitTest, setTimeRemaining } = useTest();
+  const { activeTest, activeState, isInitialized, submitTest, setTimeRemaining } = useTest();
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showPalette, setShowPalette] = useState(false); // For mobile
   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
 
   useEffect(() => {
+    if (!isInitialized) return;
+    
     if (!activeTest || !activeState || activeState.status !== "in-progress") {
       router.push("/tests");
     }
-  }, [activeTest, activeState, router]);
+  }, [activeTest, activeState, isInitialized, router]);
 
   // Timer Effect
   useEffect(() => {
@@ -39,8 +41,8 @@ export default function TestAttemptPage() {
     return () => clearInterval(timer);
   }, [activeState?.timeRemaining, activeState?.status, setTimeRemaining]);
 
-  if (!activeTest || !activeState || activeState.status !== "in-progress") {
-    return <div className="min-h-screen" />;
+  if (!isInitialized || !activeTest || !activeState || activeState.status !== "in-progress") {
+    return <div className="min-h-screen flex items-center justify-center text-[var(--color-plum-light)]">Loading...</div>;
   }
 
   const currentQuestion = activeTest.questions[currentIndex];

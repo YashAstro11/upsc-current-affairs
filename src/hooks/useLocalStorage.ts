@@ -4,6 +4,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState<T>(initialValue);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Use useEffect to read from localStorage after component mounts
   // This avoids hydration mismatch errors in Next.js
@@ -16,6 +17,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     } catch (error) {
       console.warn(`Error reading localStorage key "${key}":`, error);
     }
+    setIsInitialized(true);
   }, [key]);
 
   // Return a wrapped version of useState's setter function that ...
@@ -36,5 +38,5 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     }
   };
 
-  return [storedValue, setValue] as const;
+  return [storedValue, setValue, isInitialized] as const;
 }

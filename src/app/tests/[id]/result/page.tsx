@@ -11,20 +11,24 @@ export default function TestResultPage() {
   const params = useParams();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const { activeState, endTestAndClear } = useTest();
+  const { activeState, isInitialized, endTestAndClear } = useTest();
   
   const testId = typeof params?.id === 'string' ? params.id : '';
   const test = sampleTests.find(t => t.id === testId);
 
   useEffect(() => {
     setMounted(true);
+    if (!isInitialized) return;
+    
     // If there is no active state or the state is not submitted, redirect
     if (!activeState || activeState.status !== "submitted" || activeState.testId !== testId) {
       router.push(`/tests/${testId}`);
     }
-  }, [activeState, testId, router]);
+  }, [activeState, testId, isInitialized, router]);
 
-  if (!mounted || !test || !activeState || activeState.status !== "submitted") return <div className="min-h-screen" />;
+  if (!mounted || !isInitialized || !test || !activeState || activeState.status !== "submitted") {
+    return <div className="min-h-screen flex items-center justify-center text-[var(--color-plum-light)]">Loading...</div>;
+  }
 
   // Calculate Results
   let correctCount = 0;

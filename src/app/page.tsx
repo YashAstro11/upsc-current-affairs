@@ -9,6 +9,7 @@ import { useProgress } from "@/hooks/useProgress";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { useFirebaseData } from "@/hooks/useFirebaseData";
 import { useAuth } from "@/context/AuthContext";
+import { StudyTimer } from "@/components/StudyTimer";
 import { Sparkles, CheckCircle2, Circle, Flame, PartyPopper } from "lucide-react";
 
 export default function Dashboard() {
@@ -111,6 +112,9 @@ export default function Dashboard() {
         </div>
         <p className="text-sm text-[var(--color-plum)]/80 font-medium">Your goal is getting closer.</p>
       </div>
+
+      {/* Study Timer */}
+      <StudyTimer />
 
       {/* Daily Target */}
       <div className="bg-[var(--color-card)]/80 backdrop-blur-sm border border-[var(--color-lavender-soft)] rounded-3xl p-6 shadow-[0_4px_20px_-10px_rgba(74,44,64,0.08)]">
